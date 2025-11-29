@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'user',
     'plant',
+    'chat',
 ]
 
 MIDDLEWARE = [
@@ -163,3 +164,5 @@ SESSION_COOKIE_AGE = 60 * 60 * 24 * 7  # 1 week in seconds
 
 # Optional — don't expire when the browser closes
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+
+GEMINI_API_KEY = "AIzaSyBee8EoCKqFaWm7408jIQf5DwNwFqhbVxc"

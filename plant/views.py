@@ -2,15 +2,14 @@ import os
 from datetime import timedelta, date
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.parsers import MultiPartParser
 from django.conf import settings
-
 from plant_care.permission import LoginRequiredPermission
 from .models import Plant, WateringReminder
 from .serializers import PlantSerializer, WateringReminderSerializer
 from .image_detection import predict_plant_type
 from .calculate_watering_days import predict_watering_days
+from rest_framework import status
 
 class DetectAndSavePlantView(APIView):
     permission_classes = [LoginRequiredPermission]
