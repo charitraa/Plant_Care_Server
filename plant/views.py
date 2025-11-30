@@ -83,18 +83,27 @@ class CreateReminderView(APIView):
 
         next_watering = last_watered + timedelta(days=watering_days)
 
-        reminder = WateringReminder.objects.create(
+        # ✅ REPLACE OLD REMINDER
+        reminder, created = WateringReminder.objects.update_or_create(
             plant=plant,
-            temperature=temperature,
-            humidity=humidity,
-            sunlight=sunlight,
-            last_watered=last_watered,
-            watering_days=watering_days,
-            next_watering_date=next_watering
+            defaults={
+                "temperature": temperature,
+                "humidity": humidity,
+                "sunlight": sunlight,
+                "last_watered": last_watered,
+                "watering_days": watering_days,
+                "next_watering_date": next_watering,
+            }
         )
 
         serializer = WateringReminderSerializer(reminder)
-        return Response({"message": "Reminder created", "data": serializer.data}, status=201)
+        return Response(
+            {
+                "message": "Reminder replaced" if not created else "Reminder created",
+                "data": serializer.data
+            },
+            status=200 if not created else 201
+        )
 
 
 class NotificationsView(APIView):
